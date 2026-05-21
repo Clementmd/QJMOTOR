@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Admin\CategorieController;
 use App\Http\Controllers\Admin\VehiculeController;
+use App\Http\Controllers\Admin\CatActuController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +51,15 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::put('/vehicules/{id}', [VehiculeController::class, 'update'])->name('vehicules.update');
     Route::get('/vehicules/{id}/delete', [VehiculeController::class, 'delete'])->name('vehicules.delete');
     Route::delete('/vehicules/{id}', [VehiculeController::class, 'destroy'])->name('vehicules.destroy');
+
+    //CATACTUS
+    Route::get('/catactus', [CatActuController::class, 'index'])->name('catactus.index');
+    Route::get('/catactus/create', [CatActuController::class, 'create'])->name('catactus.create');
+    Route::post('/catactus', [CatActuController::class, 'store'])->name('catactus.store');
+    Route::get('/catactus/{id}/edit', [CatActuController::class, 'edit'])->name('catactus.edit');
+    Route::put('/catactus/{id}', [CatActuController::class, 'update'])->name('catactus.update');
+    Route::get('/catactus/{id}/delete', [CatActuController::class, 'delete'])->name('catactus.delete');
+    Route::delete('/catactus/{id}', [CatActuController::class, 'destroy'])->name('catactus.destroy');
     
 });
 

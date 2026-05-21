@@ -30,7 +30,11 @@
                 <li class="dropdown">
                     <a href="#" class="nav-link">Actus ▾</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" class="nav-link">Categories d'actus</a></li>
+                        <li>
+                            <a href="{{ route('admin.catactus.index') }}" class="nav-link {{ request()->routeIs('admin.catactus.index') ? 'active' : '' }}" class="nav-link">
+                                Categories d'actus
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 
