@@ -62,7 +62,7 @@
 
                             <td class="text-right table-actions">
                                 <a href="{{ route('admin.actus.edit', $article->id) }}"class="btn-edit" title="Modifier">📝</a>
-                                <a href="#" class="btn-delete" title="Supprimer">✕</a>
+                                <a href="{{ route('admin.actus.delete', $article->id) }}"class="btn-delete" title="Supprimer">✕</a>
                             </td>
                         </tr>
                     @empty

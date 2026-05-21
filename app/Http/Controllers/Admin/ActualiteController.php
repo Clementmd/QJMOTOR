@@ -114,4 +114,31 @@ class ActualiteController extends Controller
 
         return redirect()->route('admin.actus.index')->with('success', 'L\'actualité a été modifiée avec succès !');
     }
+
+    public function delete($id)
+    {
+        $actu = Actualite::findOrFail($id);
+        
+        return view('admin.actus.delete', compact('actu'));
+    }
+
+
+    public function destroy($id)
+    {
+        $actu = Actualite::findOrFail($id);
+
+        if ($actu->image_couverture) {
+            Storage::disk('public')->delete($actu->image_couverture);
+        }
+
+        if ($actu->images && is_array($actu->images)) {
+            foreach ($actu->images as $imagePath) {
+                Storage::disk('public')->delete($imagePath);
+            }
+        }
+
+        $actu->delete();
+
+        return redirect()->route('admin.actus.index')->with('success', 'L\'actualité a été supprimée avec succès !');
+    }
 }

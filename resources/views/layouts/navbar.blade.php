@@ -39,7 +39,7 @@
                 </li>
                 
                 <li>
-                    <a href="#" class="nav-link">Essaie</a>
+                    <a href="{{ route('admin.essaies.index') }}" class="nav-link {{ request()->routeIs('admin.essaies.index') ? 'active' : '' }}" class="nav-link">Essaie</a>
                 </li>
                 
                 <li>

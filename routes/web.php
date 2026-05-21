@@ -5,16 +5,18 @@ use App\Http\Controllers\Admin\CategorieController;
 use App\Http\Controllers\Admin\VehiculeController;
 use App\Http\Controllers\Admin\CatActuController;
 use App\Http\Controllers\Admin\ActualiteController;
+use App\Http\Controllers\Admin\EssaieController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -66,6 +68,17 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/actus', [ActualiteController::class, 'store'])->name('actus.store');
     Route::get('/actus/{id}/edit', [ActualiteController::class, 'edit'])->name('actus.edit');
     Route::put('/actus/{id}', [ActualiteController::class, 'update'])->name('actus.update');
+    Route::get('/actus/{id}/delete', [ActualiteController::class, 'delete'])->name('actus.delete');
+    Route::delete('/actus/{id}', [ActualiteController::class, 'destroy'])->name('actus.destroy');
+
+    //ESSAIS
+    Route::get('/essais', [EssaieController::class, 'index'])->name('essaies.index');
+    Route::get('/essais/create', [EssaieController::class, 'create'])->name('essaies.create');
+    Route::post('/essais', [EssaieController::class, 'store'])->name('essaies.store');
+    Route::get('/essais/{id}/edit', [EssaieController::class, 'edit'])->name('essaies.edit');
+    Route::put('/essais/{id}', [EssaieController::class, 'update'])->name('essaies.update');
+    Route::get('/essais/{id}/delete', [EssaieController::class, 'delete'])->name('essaies.delete');
+    Route::delete('/essais/{id}', [EssaieController::class, 'destroy'])->name('essaies.destroy');
 
 });
 
