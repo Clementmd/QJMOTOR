@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Admin\CategorieController;
 use App\Http\Controllers\Admin\VehiculeController;
 use App\Http\Controllers\Admin\CatActuController;
+use App\Http\Controllers\Admin\ActualiteController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +21,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     
@@ -60,7 +59,14 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::put('/catactus/{id}', [CatActuController::class, 'update'])->name('catactus.update');
     Route::get('/catactus/{id}/delete', [CatActuController::class, 'delete'])->name('catactus.delete');
     Route::delete('/catactus/{id}', [CatActuController::class, 'destroy'])->name('catactus.destroy');
-    
+
+    //ACTUS
+    Route::get('/actus', [ActualiteController::class, 'index'])->name('actus.index');
+    Route::get('/actus/create', [ActualiteController::class, 'create'])->name('actus.create');
+    Route::post('/actus', [ActualiteController::class, 'store'])->name('actus.store');
+    Route::get('/actus/{id}/edit', [ActualiteController::class, 'edit'])->name('actus.edit');
+    Route::put('/actus/{id}', [ActualiteController::class, 'update'])->name('actus.update');
+
 });
 
 require __DIR__.'/auth.php';

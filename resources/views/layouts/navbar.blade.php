@@ -28,7 +28,7 @@
                 </li>
                 
                 <li class="dropdown">
-                    <a href="#" class="nav-link">Actus ▾</a>
+                    <a href="{{ route('admin.actus.index') }}" class="nav-link {{ request()->routeIs('admin.actus.index') ? 'active' : '' }}" class="nav-link">Actus ▾</a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="{{ route('admin.catactus.index') }}" class="nav-link {{ request()->routeIs('admin.catactus.index') ? 'active' : '' }}" class="nav-link">
