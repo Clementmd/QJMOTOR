@@ -104,7 +104,9 @@
                             </td>  
                             <td class="text-right table-actions">
                                 <a href="{{ route('admin.vehicules.edit', $vehicule->id) }}" class="btn-edit" title="Modifier">📝</a>
-                                <a href="{{ route('admin.vehicules.delete', $vehicule->id) }}" class="btn-delete" title="Supprimer">✕</a>
+                                <a href="{{ route('admin.vehicules.delete', $vehicule->id) }}" class="btn-delete" title="Supprimer">
+                                    ✕
+                                </a>
                             </td>
                         </tr>
                     @empty

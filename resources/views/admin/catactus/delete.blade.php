@@ -2,27 +2,40 @@
     <x-slot name="title">Supprimer une catégorie d'actu | QJMOTOR</x-slot>
 
     <div class="admin-wrapper">
-        <div class="card-box card-box-small text-center">
+        <div class="card-box modal-delete-box" style="margin: 40px auto; max-width: 600px;">
             
-            <div class="card-header-form" style="justify-content: center; gap: 15px; margin-bottom: 25px;">
-                <img src="{{ asset('images/logo-qjmotor.webp') }}" alt="QJMOTOR" class="form-header-logo">
-                <h1 class="form-header-title" style="margin: 0; font-size: 24px;">Supprimer une catégorie</h1>
+            <div class="card-header">
+                <span class="vertical-bar border-red"></span>
+                <h2 class="card-title modal-delete-title">Supprimer la catégorie : <span style="color: #e53e3e;">{{ $cat->nom }}</span></h2>
             </div>
 
-            <p class="delete-confirmation-text" style="font-size: 16px; color: #1e293b; margin: 30px 0;">
-                Êtes-vous sûr de vouloir supprimer la catégorie : <strong>{{ $cat->nom }}</strong> ?
+            <p class="modal-delete-desc">
+                Des articles d'actualités sont associés à cette catégorie. Choisissez l'action à mener pour les éléments liés avant de confirmer :
             </p>
-
-            <form action="{{ route('admin.catactus.destroy', $cat->id) }}" method="POST">
+            
+            <form action="{{ route('admin.catactus.delete-execute', $cat->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
 
-                <div class="form-buttons-row" style="justify-content: center; gap: 20px;">
-                    <button type="submit" class="btn-global-red">Oui supprimer</button>
-                    <a href="{{ route('admin.catactus.index') }}" class="btn-global-gray">Annuler</a>
+                <div class="modal-choice-block">
+                    <span class="modal-choice-title">Pour les Actualités liées :</span>
+                    
+                    <label class="modal-choice-option">
+                        <input type="radio" name="delete_actus_behavior" value="set_null" checked>
+                        <span><strong>Conserver les articles</strong> (Désassocier la catégorie)</span>
+                    </label>
+                    
+                    <label class="modal-choice-option danger-option">
+                        <input type="radio" name="delete_actus_behavior" value="cascade">
+                        <span><strong>Supprimer définitivement</strong> tous les articles de cette catégorie</span>
+                    </label>
+                </div>
+
+                <div class="modal-actions-wrapper">
+                    <a href="{{ route('admin.catactus.index') }}" class="btn-global-gray" style="text-decoration: none; display: inline-block; padding: 10px 20px;">Annuler</a>
+                    <button type="submit" class="btn-global-red">Confirmer la suppression</button>
                 </div>
             </form>
-
         </div>
     </div>
 </x-guest-layout>

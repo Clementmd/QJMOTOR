@@ -5,6 +5,7 @@ use App\Models\Type;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Models\Categorie;
+use App\Models\Produit;
 use Illuminate\Http\Request;
 
 class CategorieController extends Controller
@@ -76,9 +77,31 @@ class CategorieController extends Controller
         return redirect()->route('admin.categories.index')->with('success', 'La catégorie a été modifiée avec succès !');
     }
 
-    public function delete(Categorie $categorie)
+    public function confirmDelete($id)
     {
+        $categorie = Categorie::findOrFail($id);
         return view('admin.categories.delete', compact('categorie'));
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $categorie = Categorie::findOrFail($id);
+        
+        $behavior = $request->input('delete_vehicules_behavior', 'set_null');
+
+        if ($behavior === 'cascade') {
+            Produit::where('categorie_id', $categorie->id)->delete();
+        } else {
+            Produit::where('categorie_id', $categorie->id)->update(['categorie_id' => null]);
+        }
+
+        if ($categorie->image_fond && Storage::disk('public')->exists($categorie->image_fond)) {
+            Storage::disk('public')->delete($categorie->image_fond);
+        }
+
+        $categorie->delete();
+
+        return redirect()->route('admin.categories.index')->with('success', 'La catégorie a été supprimée avec succès.');
     }
 
     public function destroy(Categorie $categorie)

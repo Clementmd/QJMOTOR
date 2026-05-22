@@ -41,7 +41,9 @@
                             </td>
                             <td class="text-right table-actions">
                                 <a href="{{ route('admin.catactus.edit', $cat->id) }}" class="btn-edit" title="Modifier">📝</a>
-                                <a href="{{ route('admin.catactus.delete', $cat->id) }}" class="btn-delete" title="Supprimer">✕</a>
+                                <a href="{{ route('admin.catactus.delete', $cat->id) }}" class="btn-delete" title="Supprimer">
+                                    ✕
+                                </a>
                             </td>
                         </tr>
                     @empty

@@ -60,7 +60,9 @@
                             
                             <td class="text-right table-actions">
                                 <a href="{{ route('admin.categories.edit', $categorie->id) }}" class="btn-edit" title="Modifier">📝</a>
-                                <a href="{{ route('admin.categories.delete', $categorie->id) }}" class="btn-delete" title="Supprimer">✕</a>
+                                <a href="{{ route('admin.categories.delete', $categorie->id) }}" class="btn-delete" title="Supprimer">
+                                    ✕
+                                </a>
                             </td>
                         </tr>
                     @empty

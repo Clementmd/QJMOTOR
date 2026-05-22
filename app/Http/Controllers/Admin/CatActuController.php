@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CatActu;
+use App\Models\Actualite;
 use Illuminate\Http\Request;
 
 class CatActuController extends Controller
@@ -55,10 +56,27 @@ class CatActuController extends Controller
         return redirect()->route('admin.catactus.index')->with('success', 'La catégorie d\'actu a été modifiée avec succès !');
     }
 
-    public function delete($id)
+    public function confirmDelete($id)
     {
         $cat = CatActu::findOrFail($id);
         return view('admin.catactus.delete', compact('cat'));
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $catActu = CatActu::findOrFail($id);
+        
+        $behavior = $request->input('delete_actus_behavior', 'set_null');
+
+        if ($behavior === 'cascade') {
+            Actualite::where('cat_actu_id', $catActu->id)->delete();
+        } else {
+            Actualite::where('cat_actu_id', $catActu->id)->update(['cat_actu_id' => null]);
+        }
+
+        $catActu->delete();
+
+        return redirect()->route('admin.catactus.index')->with('success', 'La catégorie d\'actualités a été supprimée avec succès.');
     }
 
     public function destroy($id)

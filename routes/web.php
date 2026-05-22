@@ -32,8 +32,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/types', [TypeController::class, 'store'])->name('types.store');   
     Route::get('/types/{type}/edit', [TypeController::class, 'edit'])->name('types.edit');   
     Route::put('/types/{type}', [TypeController::class, 'update'])->name('types.update');  
-    Route::get('/types/{type}/delete', [TypeController::class, 'delete'])->name('types.delete'); 
-    Route::delete('/types/{type}', [TypeController::class, 'destroy'])->name('types.destroy');    
+    Route::get('/types/{type}/delete', [TypeController::class, 'confirmDelete'])->name('types.delete'); 
+    Route::delete('/types/{type}/delete/execute', [TypeController::class, 'delete'])->name('types.delete-execute');  
 
     //CATEGORIES
     Route::get('/categories', [CategorieController::class, 'index'])->name('categories.index');
@@ -41,8 +41,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/categories', [CategorieController::class, 'store'])->name('categories.store');
     Route::get('/categories/{categorie}/edit', [CategorieController::class, 'edit'])->name('categories.edit');
     Route::put('/categories/{categorie}', [CategorieController::class, 'update'])->name('categories.update');
-    Route::get('/categories/{categorie}/delete', [CategorieController::class, 'delete'])->name('categories.delete');
-    Route::delete('/categories/{categorie}', [CategorieController::class, 'destroy'])->name('categories.destroy');
+    Route::get('/categories/{id}/delete', [CategorieController::class, 'confirmDelete'])->name('categories.delete');
+    Route::delete('/categories/{id}/delete/execute', [CategorieController::class, 'delete'])->name('categories.delete-execute');
 
     //VEHICULES
     Route::get('/vehicules', [VehiculeController::class, 'index'])->name('vehicules.index');
@@ -50,8 +50,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/vehicules', [VehiculeController::class, 'store'])->name('vehicules.store');
     Route::get('/vehicules/{id}/edit', [VehiculeController::class, 'edit'])->name('vehicules.edit');
     Route::put('/vehicules/{id}', [VehiculeController::class, 'update'])->name('vehicules.update');
-    Route::get('/vehicules/{id}/delete', [VehiculeController::class, 'delete'])->name('vehicules.delete');
-    Route::delete('/vehicules/{id}', [VehiculeController::class, 'destroy'])->name('vehicules.destroy');
+    Route::get('/vehicules/{id}/delete', [VehiculeController::class, 'confirmDelete'])->name('vehicules.delete');
+    Route::delete('/vehicules/{id}/delete/execute', [VehiculeController::class, 'delete'])->name('vehicules.delete-execute');
 
     //CATACTUS
     Route::get('/catactus', [CatActuController::class, 'index'])->name('catactus.index');
@@ -59,8 +59,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/catactus', [CatActuController::class, 'store'])->name('catactus.store');
     Route::get('/catactus/{id}/edit', [CatActuController::class, 'edit'])->name('catactus.edit');
     Route::put('/catactus/{id}', [CatActuController::class, 'update'])->name('catactus.update');
-    Route::get('/catactus/{id}/delete', [CatActuController::class, 'delete'])->name('catactus.delete');
-    Route::delete('/catactus/{id}', [CatActuController::class, 'destroy'])->name('catactus.destroy');
+    Route::get('/catactus/{id}/delete', [CatActuController::class, 'confirmDelete'])->name('catactus.delete');
+    Route::delete('/catactus/{id}/delete/execute', [CatActuController::class, 'delete'])->name('catactus.delete-execute');
 
     //ACTUS
     Route::get('/actus', [ActualiteController::class, 'index'])->name('actus.index');

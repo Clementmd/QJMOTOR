@@ -53,7 +53,7 @@
                                 {{ $article->titre }}
                             </td>
                             <td class="td-bold">
-                                {{ $article->categorie->nom }}
+                                {{ $article->categorie ? $article->categorie->nom : 'Sans catégorie' }}
                             </td>
 
                             <td class="td-bold">

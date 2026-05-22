@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('actualites', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cat_actu_id')->constrained('cat_actus')->onDelete('cascade');
+            $table->foreignId('cat_actu_id')->nullable()->constrained('cat_actus')->onDelete('set null');
             $table->string('titre', 255); 
             $table->date('date_publication');
             $table->text('description'); 
