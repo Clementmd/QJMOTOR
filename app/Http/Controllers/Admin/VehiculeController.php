@@ -36,8 +36,13 @@ class VehiculeController extends Controller
             'type_id' => 'required|exists:types,id',
             'categorie_id' => 'required|exists:categories,id',
             'prix' => 'required|integer|min:0',
-            'image_principale' => 'required|image|mimes:jpg,jpeg,png,webp|max:3072',
-            'image_fond' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'permis' => 'nullable|string|max:50',     
+            'garantie' => 'nullable|string|max:100',  
+            'couleurs' => 'nullable|string', 
+            'images_carrousel.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10000', 
+            'descriptions_carrousel.*' => 'nullable|string',
+            'image_principale' => 'required|image|mimes:jpg,jpeg,png,webp|max:10000',  
+            'image_fond' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10000',
             'caracteristiques' => 'nullable|string',
             
             'cylindree' => 'nullable|integer|min:0', 
@@ -48,12 +53,28 @@ class VehiculeController extends Controller
             'titre' => 'nullable|string|max:255',
             'description_courte' => 'nullable|string|max:5200',
             'description' => 'nullable|string',
-            'galeries_photos.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:3072',
+            'galeries_photos.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10000',
             'actif' => 'required|in:0,1',
         ]);
 
-        $data = $request->except(['image_principale', 'image_fond', 'galeries_photos']);
+        $cheminsImages = [];
+        $textesDescriptions = [];
+
+        if ($request->hasFile('images_carrousel')) {
+            foreach ($request->file('images_carrousel') as $key => $file) {
+                $path = $file->store('carrousel', 'public');
+                $cheminsImages[] = $path;
+
+                $description = $request->input('descriptions_carrousel.' . $key);
+                $textesDescriptions[] = $description ?? '';
+            }
+        }
+
+        $data = $request->except(['image_principale', 'image_fond', 'galeries_photos', 'images_carrousel', 'descriptions_carrousel']);
         $data['actif'] = (bool) $request->actif;
+        
+        $data['images_carrousel'] = $cheminsImages;
+        $data['descriptions_carrousel'] = $textesDescriptions;
 
         if ($request->hasFile('image_principale')) {
             $data['image_principale'] = $request->file('image_principale')->store('vehicules/principales', 'public');
@@ -94,22 +115,50 @@ class VehiculeController extends Controller
             'type_id' => 'required|exists:types,id',
             'categorie_id' => 'required|exists:categories,id',
             'prix' => 'required|integer|min:0',
-            'image_principale' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:3072',
-            'image_fond' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'permis' => 'nullable|string|max:50',    
+            'garantie' => 'nullable|string|max:100', 
+            'couleurs' => 'nullable|string',
+            'images_carrousel.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10000',
+            'descriptions_carrousel.*' => 'nullable|string',
+            'image_principale' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10000',
+            'image_fond' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10000',
             'caracteristiques' => 'nullable|string',
             'cylindree' => 'nullable|integer|min:0', 
             'puissance' => 'nullable|numeric|min:0|max:9999.99', 
             'poids' => 'nullable|numeric|min:0|max:9999.99', 
-            'couple' => 'nullable|integer|min:0',
+            'couple' => 'nullable|numeric|min:0|max:9999.99', 
             'titre' => 'nullable|string|max:255',
             'description_courte' => 'nullable|string|max:5200',
             'description' => 'nullable|string',
-            'galeries_photos.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:3072',
+            'galeries_photos.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10000',
             'actif' => 'required|in:0,1',
         ]);
 
-        $data = $request->except(['image_principale', 'image_fond', 'galeries_photos']);
+        $data = $request->except(['image_principale', 'image_fond', 'galeries_photos', 'images_carrousel', 'descriptions_carrousel']);
         $data['actif'] = (bool) $request->actif;
+
+        if ($request->hasFile('images_carrousel')) {
+            if (is_array($vehicule->images_carrousel)) {
+                foreach ($vehicule->images_carrousel as $ancienneImg) {
+                    Storage::disk('public')->delete($ancienneImg);
+                }
+            }
+
+            $cheminsImages = [];
+            $textesDescriptions = [];
+
+            foreach ($request->file('images_carrousel') as $key => $file) {
+                $path = $file->store('carrousel', 'public');
+                $cheminsImages[] = $path;
+
+                $description = $request->input('descriptions_carrousel.' . $key);
+                $textesDescriptions[] = $description ?? '';
+            }
+            $data['images_carrousel'] = $cheminsImages;
+            $data['descriptions_carrousel'] = $textesDescriptions;
+        } else {
+            $data['descriptions_carrousel'] = $request->input('descriptions_carrousel') ?? $vehicule->descriptions_carrousel;
+        }
 
         if ($request->hasFile('image_principale')) {
             if ($vehicule->image_principale && Storage::disk('public')->exists($vehicule->image_principale)) {
@@ -138,6 +187,27 @@ class VehiculeController extends Controller
         return redirect()->route('admin.vehicules.index')->with('success', 'Véhicule mis à jour avec succès !');
     }
 
+    public function showAPI($id)
+    {
+        $vehicule = Produit::with(['categorie', 'type'])->find($id);
+
+        if (!$vehicule) {
+            return response()->json(['message' => 'Véhicule non trouvé'], 404);
+        }
+
+        return response()->json($vehicule);
+    }
+
+    public function showFront($typeSlug, $id)
+    {
+        $vehicule = \App\Models\Produit::findOrFail($id);
+        
+        return view('welcome', [
+            'vehicule' => $vehicule,
+            'activeTypeSlug' => $typeSlug 
+        ]);
+    }
+    
     public function confirmDelete($id)
     {
         $vehicule = Produit::findOrFail($id);

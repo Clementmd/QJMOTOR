@@ -1,4 +1,4 @@
-<x-guest-layout> <x-slot name="title">Supprimer un type de véhicule | QJMOTOR</x-slot>
+<x-app-layout> <x-slot name="title">Supprimer un type de véhicule | QJMOTOR</x-slot>
 
     <div class="admin-wrapper">
         <div class="card-box modal-delete-box" style="margin: 40px auto; max-width: 600px;">
@@ -45,4 +45,4 @@
             </form>
         </div>
     </div>
-</x-guest-layout>
+</x-app-layout>

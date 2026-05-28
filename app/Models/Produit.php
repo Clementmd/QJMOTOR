@@ -12,14 +12,18 @@ class Produit extends Model
     protected $table = 'produits';
 
     protected $fillable = [
-        'type_id', 'categorie_id', 'nom', 'prix', 'image_principale', 'image_fond', 
+        'type_id', 'categorie_id', 'nom', 'prix','permis',  
+        'garantie', 'image_principale', 'image_fond', 
+        'couleurs','images_carrousel','descriptions_carrousel',
         'caracteristiques', 'cylindree', 'puissance', 'couple', 'poids', 
         'titre', 'description_courte', 'galeries_photos', 'description', 'actif'
     ];
 
     protected $casts = [
         'galeries_photos' => 'array',
-        'actif' => 'boolean'
+        'actif' => 'boolean',
+        'images_carrousel' => 'array',      
+        'descriptions_carrousel' => 'array',
     ];
 
     public function type()

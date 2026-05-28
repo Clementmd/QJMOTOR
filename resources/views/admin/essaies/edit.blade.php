@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <x-slot name="title">Modifier un essai | QJMOTOR</x-slot>
 
     <div class="admin-wrapper">
@@ -66,4 +66,4 @@
             </form>
         </div>
     </div>
-</x-guest-layout>
+</x-app-layout>

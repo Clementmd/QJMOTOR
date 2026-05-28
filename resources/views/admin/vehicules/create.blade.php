@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <x-slot name="title">Ajouter un véhicule | QJMOTOR</x-slot>
 
     <div class="admin-wrapper">
@@ -9,6 +9,16 @@
                 <h1 class="form-header-title">Ajouter un véhicule</h1>
             </div>
 
+            @if ($errors->any())
+                <div style="background-color: #f8d7da; color: #721c24; padding: 15px; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 20px; font-family: sans-serif;">
+                    <strong style="display: block; margin-bottom: 5px;">Oups ! Le formulaire contient des erreurs :</strong>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form action="{{ route('admin.vehicules.store') }}" method="POST" enctype="multipart/form-data" class="standard-form">
                 @csrf
 
@@ -73,6 +83,16 @@
                     <label for="cylindree" class="form-label">Cylindrée (cm³)</label>
                     <input type="number" id="cylindree" name="cylindree" value="{{ old('cylindree') }}" min="0" class="form-input" placeholder="Ex: 500">
                 </div>
+                
+                <div class="form-group">
+                    <label for="permis">Type de Permis requis</label>
+                    <input type="text" name="permis" id="permis" class="form-control" placeholder="Ex: A2, A" value="{{ old('permis', $produit->permis ?? '') }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="garantie">Garantie constructeur</label>
+                    <input type="text" name="garantie" id="garantie" class="form-control" placeholder="Ex: 3 ans constructeur" value="{{ old('garantie', $produit->garantie ?? '') }}">
+                </div>
 
                 <div class="form-group">
                     <label for="puissance" class="form-label">Puissance (ch / kW)</label>
@@ -87,6 +107,48 @@
                 <div class="form-group">
                     <label for="couple" class="form-label">Couple (Nm)</label>
                     <input type="number" id="couple" name="couple" value="{{ old('couple') }}" min="0" class="form-input" placeholder="Ex: 90">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 25px;">
+                    <label for="couleurs"><strong>Couleurs du véhicule :</strong></label>
+                    <input type="text" name="couleurs" class="form-control" placeholder="Ex: #e30613,#000000,#ffffff" value="{{ isset($produit) ? $produit->couleurs : '' }}">
+                    <small class="text-muted">Entre les codes hexadécimaux pour afficher les pastilles de couleur.</small>
+                </div>
+
+                <div class="carrousel-management-box" style="background: #f8f9fa; padding: 20px; border: 1px solid #ddd; margin-bottom: 25px;">
+                    <h4 style="margin-top: 0; margin-bottom: 15px;">Galerie d'images du carrousel</h4>
+                    
+                    <div id="dynamic-carrousel-container">
+                        @if(isset($produit) && is_array($produit->images_carrousel))
+                            @foreach($produit->images_carrousel as $index => $image)
+                                <div class="carrousel-row" style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #ccc;">
+                                    <div style="display: flex; gap: 15px; align-items: center;">
+                                        <img src="/storage/{{ $image }}" style="width: 60px; height: 60px; object-fit: cover;">
+                                        <div style="flex-grow: 1;">
+                                            <input type="file" name="images_carrousel[]" class="form-control">
+                                            <input type="text" name="descriptions_carrousel[]" class="form-control" style="margin-top: 5px;" value="{{ $produit->descriptions_carrousel[$index] ?? '' }}" placeholder="Description de cette image">
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="gallery-carousel-input-group">
+                                <label>Photo de détail et légende :</label>
+                                <input type="file" @change="handleFileChange">
+                                
+                                <textarea 
+                                    v-model="nouvelleDescription" 
+                                    rows="4"
+                                    placeholder="Ex: Étriers de frein radiaux. Style sportif et affirmé..."
+                                    class="carousel-textarea"
+                                ></textarea>
+                            </div>
+                        @endif
+                    </div>
+
+                    <button type="button" id="btn-add-carrousel-item" style="background: #e30613; color: #fff; padding: 8px 16px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px;">
+                        + Ajouter une image de détail
+                    </button>
                 </div>
 
                 <div class="form-group">
@@ -145,8 +207,26 @@
             });
         }
 
+        document.getElementById('btn-add-carrousel-item').addEventListener('click', function() {
+            const container = document.getElementById('dynamic-carrousel-container');
+            
+            const newRow = document.createElement('div');
+            newRow.classList.add('carrousel-row');
+            newRow.style.marginBottom = '15px';
+            newRow.style.marginTop = '15px';
+            newRow.style.borderTop = '1px dashed #ccc';
+            newRow.style.paddingTop = '15px';
+
+            newRow.innerHTML = `
+                <input type="file" name="images_carrousel[]" class="form-control">
+                <input type="text" name="descriptions_carrousel[]" class="form-control" style="margin-top: 5px;" placeholder="Description de cette image">
+            `;
+            
+            container.appendChild(newRow);
+        });
+
         setupFileInputDesign('image_fond', 'label-image_fond');
         setupFileInputDesign('image_principale', 'label-image_principale');
-        setupFileInputDesign('galeries_photos', 'label-galeries_photos', true);
+        setupFileInputDesign('galeries_photos', 'label-galeries_photos', true); 
     </script>
-</x-guest-layout>
+</x-app-layout>

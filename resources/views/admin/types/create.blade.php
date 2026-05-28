@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <x-slot name="title">Ajouter un type de véhicule | QJMOTOR</x-slot>
 
     <div class="admin-wrapper">
@@ -27,4 +27,4 @@
             </form>
         </div>
     </div>
-</x-guest-layout>
+</x-app-layout>

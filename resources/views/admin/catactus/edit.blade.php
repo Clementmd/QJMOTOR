@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <x-slot name="title">Modifier une catégorie d'actu | QJMOTOR</x-slot>
 
     <div class="admin-wrapper">
@@ -27,4 +27,4 @@
             
         </div>
     </div>
-</x-guest-layout>
+</x-app-layout>

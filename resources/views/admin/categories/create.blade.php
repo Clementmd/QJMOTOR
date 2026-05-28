@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <x-slot name="title">Ajouter une catégorie | QJMOTOR</x-slot>
 
     <div class="admin-wrapper">
@@ -62,4 +62,4 @@
             document.getElementById('file-name-display').textContent = fileName;
         });
     </script>
-</x-guest-layout>
+</x-app-layout>

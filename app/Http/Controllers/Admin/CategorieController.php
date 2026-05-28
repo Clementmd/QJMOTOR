@@ -114,4 +114,13 @@ class CategorieController extends Controller
 
         return redirect()->route('admin.categories.index')->with('success', 'La catégorie a été supprimée avec succès !');
     }
+
+    public function showAPI($slug)
+    {
+        $categorie = \App\Models\Categorie::where('nom', $slug)
+            ->with('produits')
+            ->firstOrFail();
+
+        return response()->json($categorie);
+    }
 }

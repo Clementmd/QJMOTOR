@@ -15,4 +15,9 @@ class Categorie extends Model
     {
         return $this->belongsTo(Type::class, 'type_id');
     }
+
+    public function produits()
+    {
+        return $this->hasMany(Produit::class, 'categorie_id');
+    }
 }

@@ -9,20 +9,19 @@ use App\Http\Controllers\Admin\EssaieController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Front\HomeController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('front.home');
+Route::get('/{typeSlug}/{id}', [VehiculeController::class, 'showFront'])
+    ->name('front.vehicule.show')
+    ->where('id', '[0-9]+');
+Route::get('/api/front/vehicules/{id}', [VehiculeController::class, 'showAPI']);
+Route::get('/categorie/{slug}', [CategorieController::class, 'showFront']);
+Route::get('/api/categories/{slug}', [CategorieController::class, 'showAPI']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     

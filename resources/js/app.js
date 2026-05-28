@@ -1,7 +1,16 @@
+import { createApp } from 'vue';
+import '../css/style.css'; 
 
+import HeaderFront from './components/HeaderFront.vue';
+import HomeFront from './pages/HomeFront.vue';
+import VehiculesFront from './pages/VehiculesFront.vue'; 
+import CategorieVehicules from './pages/CategorieVehicules.vue';
 
-import Alpine from 'alpinejs';
+const app = createApp({});
 
-window.Alpine = Alpine;
+app.component('header-front', HeaderFront);
+app.component('home-front', HomeFront);
+app.component('vehicule-front', VehiculesFront); 
+app.component('categorie-vehicules', CategorieVehicules);
 
-Alpine.start();
+app.mount('#app');

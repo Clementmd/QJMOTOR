@@ -10,4 +10,9 @@ class Type extends Model
     use HasFactory;
 
     protected $fillable = ['nom'];
+    
+    public function categories()
+    {
+        return $this->hasMany(Categorie::class, 'type_id');
+    }
 }

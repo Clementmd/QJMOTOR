@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <x-slot name="title">Modifier une Actu | QJMOTOR</x-slot>
 
     <div class="admin-wrapper">
@@ -107,4 +107,4 @@
         setupFileInputDesign('image_couverture', 'label-image_couverture', false, currentCoverText);
         setupFileInputDesign('images', 'label-images', true, currentGalleryText);
     </script>
-</x-guest-layout>
+</x-app-layout>
