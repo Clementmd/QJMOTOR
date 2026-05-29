@@ -10,21 +10,28 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Admin\NewsletterController;
 
+//API 
+Route::get('/api/categories/{slug}', [CategorieController::class, 'showAPI']);
+Route::post('/api/newsletter', [App\Http\Controllers\Admin\NewsletterController::class, 'store']);
+Route::get('/api/front/vehicules/{id}', [VehiculeController::class, 'showAPI']);
+
+
+//FRONT
 Route::get('/', [HomeController::class, 'index'])->name('front.home');
 Route::get('/{typeSlug}/{id}', [VehiculeController::class, 'showFront'])
     ->name('front.vehicule.show')
     ->where('id', '[0-9]+');
-Route::get('/api/front/vehicules/{id}', [VehiculeController::class, 'showAPI']);
 Route::get('/categorie/{slug}', [CategorieController::class, 'showFront'])
     ->name('front.categorie.show')
     ->where('slug', '.*');  
-Route::get('/api/categories/{slug}', [CategorieController::class, 'showAPI']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+//BACK-OFFICE
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     
     // TYPES
@@ -81,6 +88,12 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/essais/{id}/delete', [EssaieController::class, 'delete'])->name('essaies.delete');
     Route::delete('/essais/{id}', [EssaieController::class, 'destroy'])->name('essaies.destroy');
 
+    // NEWSLETTERS
+    Route::get('/newsletters', [NewsletterController::class, 'index'])->name('newsletters.index');
+    Route::get('/newsletters/{id}/edit', [NewsletterController::class, 'edit'])->name('newsletters.edit');
+    Route::put('/newsletters/{id}', [NewsletterController::class, 'update'])->name('newsletters.update');
+    Route::get('/newsletters/{id}/delete', [NewsletterController::class, 'confirmDelete'])->name('newsletters.delete');
+    Route::delete('/newsletters/{id}/delete/execute', [NewsletterController::class, 'delete'])->name('newsletters.delete-execute');
 });
 
 require __DIR__.'/auth.php';

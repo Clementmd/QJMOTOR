@@ -214,8 +214,8 @@
             <p>Pas encore d'autres modèles disponibles dans cette catégorie.</p>
         </div>
     </section>
-
   </div>
+  
 </template>
 
 <script>

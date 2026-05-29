@@ -110,10 +110,11 @@
 
             </div>
         </section>
-
+        
     </div>
 
     <div v-else class="loading">Catégorie introuvable.</div>
+    
 </template>
 
 <script setup>

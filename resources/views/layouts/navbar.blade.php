@@ -41,6 +41,12 @@
                 <li>
                     <a href="{{ route('admin.essaies.index') }}" class="nav-link {{ request()->routeIs('admin.essaies.index') ? 'active' : '' }}" class="nav-link">Essaie</a>
                 </li>
+
+                <li>
+                    <a href="{{ route('admin.newsletters.index') }}" class="nav-link {{ request()->routeIs('admin.newsletters.index') ? 'active' : '' }}">
+                        Newsletters
+                    </a>
+                </li>
                 
                 <li>
                     <form action="{{ route('logout') }}" method="POST" style="display: inline;">

@@ -197,17 +197,7 @@
             </div>
         </section>
 
-        <section class="newsletter-section reveal">
-            <h2 class="newsletter-title">NEWSLETTER</h2>
-            <div class="newsletter-underline"></div>
-            <p class="newsletter-desc">Inscrivez-vous à notre newsletter pour recevoir les dernières actualités QJMOTOR</p>
-            
-            <div class="newsletter-form">
-                <input type="text" placeholder="Nom" class="newsletter-input">
-                <input type="email" placeholder="Email" class="newsletter-input">
-                <button class="btn-inscrire">S'INSCRIRE</button>
-            </div>
-        </section>
+        
     </div>
 </template>
 

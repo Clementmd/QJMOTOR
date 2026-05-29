@@ -32,6 +32,18 @@
             @endif
         </main>
 
+        <section class="newsletter-section">
+            <h2 class="newsletter-title">NEWSLETTER</h2>
+            <div class="newsletter-underline"></div>
+            <p class="newsletter-desc">Inscrivez-vous à notre newsletter pour recevoir les dernières actualités QJMOTOR</p>
+            
+            <div class="newsletter-form">
+                <input type="text" placeholder="Nom" class="newsletter-input">
+                <input type="email" placeholder="Email" class="newsletter-input">
+                <button class="btn-inscrire">S'INSCRIRE</button>
+            </div>
+        </section>
+
         <footer class="footer">
             <div class="logo">
                 <img src="https://qjmotor.fr/wp-content/uploads/2024/10/QJ-Motors-Logo-107x72-c-default.webp" alt="QJMOTOR">
