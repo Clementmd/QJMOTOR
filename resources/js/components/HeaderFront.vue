@@ -25,16 +25,15 @@
                             <div class="mega-wrapper">
                                 
                                 <div class="mega-categories-nav">
-                                    <div 
+                                    <a 
                                         v-for="cat in type.categories" 
                                         :key="cat.id"
+                                        :href="'/categorie/' + cat.slug"
+ 
                                         class="sub-link"
-                                        :href="'/categorie/' + cat.nom"
-                                        :class="{ active: getActiveCatId(type.id, type.categories) === cat.id }"
-                                        @mouseenter="setActiveCatId(type.id, cat.id)"
                                     >
-                                        <a href="#">{{ cat.nom }}</a>
-                                    </div>
+                                        {{ cat.nom }}
+                                    </a>
                                 </div>
 
                                 <div class="mega-content">

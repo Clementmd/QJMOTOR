@@ -16,7 +16,9 @@ Route::get('/{typeSlug}/{id}', [VehiculeController::class, 'showFront'])
     ->name('front.vehicule.show')
     ->where('id', '[0-9]+');
 Route::get('/api/front/vehicules/{id}', [VehiculeController::class, 'showAPI']);
-Route::get('/categorie/{slug}', [CategorieController::class, 'showFront']);
+Route::get('/categorie/{slug}', [CategorieController::class, 'showFront'])
+    ->name('front.categorie.show')
+    ->where('slug', '.*');  
 Route::get('/api/categories/{slug}', [CategorieController::class, 'showAPI']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])

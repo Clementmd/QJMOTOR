@@ -1429,7 +1429,7 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, minmax(320px, 1fr));
     gap: 40px;
     padding: 0 20px;
 }
@@ -1497,6 +1497,16 @@ body {
     font-style: normal !important;
 }
 
+.spec-line .circle-color {
+    width: 25px !important;
+    height: 25px !important;
+    min-width: 25px !important;
+    min-height: 25px !important;
+    border-radius: 50% !important;
+    display: inline-block !important;
+    flex-shrink: 0;
+}
+
 .spec-line .label {
     color: #888;
     text-transform: uppercase;
@@ -1510,7 +1520,7 @@ body {
 
 .color-options {
     display: flex;
-    gap: 10px;
+    margin-left: 10px;
     align-items: center;
 }
 
@@ -1524,9 +1534,9 @@ body {
     cursor: pointer;
 }
 
-.circle-color.red { background-color: #D80C24 !important; }
-.circle-color.black { background-color: #000 !important; }
-.circle-color.silver { background-color: #C0C0C0 !important; }
+.circle-color.red { background-color: #D80C24; }
+.circle-color.black { background-color: #000; }
+.circle-color.silver { background-color: #C0C0C0; }
 
 .btn-square {
     display: block;

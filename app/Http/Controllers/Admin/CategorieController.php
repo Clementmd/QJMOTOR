@@ -117,10 +117,28 @@ class CategorieController extends Controller
 
     public function showAPI($slug)
     {
-        $categorie = \App\Models\Categorie::where('nom', $slug)
-            ->with('produits')
-            ->firstOrFail();
+        $categorie = \App\Models\Categorie::with('produits.type')
+            ->where('slug', $slug)
+            ->first();
+
+        if (!$categorie) {
+            return response()->json(['message' => 'Catégorie non trouvée'], 404);
+        }
 
         return response()->json($categorie);
+    }
+
+    public function showFront($slug)
+    {
+        $categorie = \App\Models\Categorie::where('slug', $slug)->first();
+        
+        if (!$categorie) {
+            abort(404);
+        }
+
+        return view('welcome', [
+            'slug' => $categorie->slug,  
+            'activeTypeSlug' => $categorie->type->nom ?? ''
+        ]);
     }
 }

@@ -21,6 +21,9 @@
         <main>
             @if(isset($vehicule))
                 <vehicule-front :id="{{ $vehicule->id }}"></vehicule-front>
+
+            @elseif(isset($slug))
+                <categorie-vehicules categorie-slug="{{ $slug }}"></categorie-vehicules>
             @else
                 <home-front 
                     :produits="{{ json_encode($produits ?? []) }}" 
